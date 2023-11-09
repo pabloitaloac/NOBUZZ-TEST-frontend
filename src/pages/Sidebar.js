@@ -1,12 +1,28 @@
 import React from 'react';
 import "./Sidebar.css"
+import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+
+import { currentUser, login, logout } from '../redux/actions';
+
 
 function Sidebar() {
+
+  const dispatch = useDispatch()
+
+const handleLogin =()=>{
+  console.log('loging');
+  // dispatch(login({id:'1'}))
+  login({id:'1'})
+}
+
     return ( 
 
-        <>
+      <>
+      {currentUser?.id?
         <div id="sidebar">
-          <h1>front-end test</h1>
+            <h1>Logout</h1>
           <div>
             <form id="search-form" role="search">
               <input
@@ -41,10 +57,29 @@ function Sidebar() {
             </ul>
           </nav>
         </div>
-        <div id="detail"></div>
+:
+        <div id="sidebar">
+            <h1 onClick={handleLogin}>Login</h1>
+          <div>
+          </div>
+          <nav>
+            <ul>
+              <li>
+                <a href={`/contacts/1`}>Home</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      }
       </>
 
      );
 }
 
-export default Sidebar;
+
+const mapDispatchToProps = {
+  currentUser, login, logout
+};
+
+
+export default connect(currentUser,mapDispatchToProps)(Sidebar);
