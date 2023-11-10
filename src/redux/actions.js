@@ -1,25 +1,32 @@
+export const signup = (userData) => {
+    return {
+      type: 'signup',
+      payload: userData || null,
+    };
+};
+  
 export const login = (userData) => {
-    console.log('inside login');
     return {
       type: 'login',
-      payload: userData,
+      payload: userData || null,
     };
 };
   
 
-export const logout = (userData) => {
+export const logout = () => {
     return {
       type: 'logout',
-      payload: userData,
+      payload: null,
     };
 };
   
 
 
-export const currentUser = (userData) => {
+export const getUserData = () => {
+  console.log('getUserData - action');
     return {
       type: 'getUserData',
-      payload: userData,
+      payload: null,
     };
 };
   

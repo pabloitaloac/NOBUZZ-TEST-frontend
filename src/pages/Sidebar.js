@@ -1,71 +1,78 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import "./Sidebar.css"
-import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { getUserData, login, logout  } from '../redux/actions';
+
+import Avatar from '@mui/material/Avatar';
 
 
-import { currentUser, login, logout } from '../redux/actions';
-
+const aux =  {
+  id:'6743267',
+  name: 'Fulano de Tal',
+  idade: '43'
+}
 
 function Sidebar() {
 
   const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.user); 
 
-const handleLogin =()=>{
-  console.log('loging');
-  // dispatch(login({id:'1'}))
-  login({id:'1'})
+
+  // const [userTest,setUserTest] = useState(aux)
+  
+
+  // useEffect(()=>{
+  //   currentUser ? setUserTest(currentUser) : setUserTest(aux)
+  // },[currentUser])
+
+
+
+
+const handleLogin =(e)=>{
+  window.location.href = '/login'
+  // dispatch(login(userTest || null))
+}
+const handleLogout =(e)=>{
+  dispatch(logout())
 }
 
     return ( 
 
       <>
-      {currentUser?.id?
+      {currentUser?
         <div id="sidebar">
-            <h1>Logout</h1>
-          <div>
-            <form id="search-form" role="search">
-              <input
-                id="q"
-                aria-label="Search contacts"
-                placeholder="Search"
-                type="search"
-                name="q"
-              />
-              <div
-                id="search-spinner"
-                aria-hidden
-                hidden={true}
-              />
-              <div
-                className="sr-only"
-                aria-live="polite"
-              ></div>
-            </form>
-            <form method="post">
-              <button type="submit">Buscar</button>
-            </form>
-          </div>
+            <h1 onClick={handleLogout}>
+              <Avatar src="/broken-image.jpg" />
+              Logout {`- ${currentUser?.name}` || ''}
+            </h1>
           <nav>
             <ul>
-              <li>
-                <a href={`/contacts/1`}>Your Name</a>
+              <li >
+                <a href={`/`}>Home</a>
               </li>
               <li>
-                <a href={`/contacts/2`}>Your Friend</a>
+                <a href={`/task`}>Lista de Tarefas</a>
               </li>
             </ul>
           </nav>
         </div>
+
+
+
 :
-        <div id="sidebar">
-            <h1 onClick={handleLogin}>Login</h1>
+
+
+
+      <div id="sidebar">
+            <h1 onClick={handleLogin}>Login / SignUp</h1>
           <div>
           </div>
           <nav>
             <ul>
               <li>
-                <a href={`/contacts/1`}>Home</a>
+                <a href={`/`}>Home</a>
               </li>
             </ul>
           </nav>
@@ -77,9 +84,5 @@ const handleLogin =()=>{
 }
 
 
-const mapDispatchToProps = {
-  currentUser, login, logout
-};
 
-
-export default connect(currentUser,mapDispatchToProps)(Sidebar);
+export default Sidebar;
